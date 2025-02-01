@@ -66,6 +66,7 @@ Advanced formats (requires complete file paths):
 
 - PDF (.pdf) - requires TeX Live installation
 - DOCX (.docx)
+- PPTX (.pptx)
 - RST (.rst)
 - LaTeX (.tex)
 - EPUB (.epub)
