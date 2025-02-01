@@ -43,7 +43,7 @@ async def handle_list_tools() -> list[types.Tool]:
                 "   * For better control, always provide explicit output file paths\n\n"
                 "Supported formats:\n"
                 "- Basic formats: txt, html, markdown\n"
-                "- Advanced formats (REQUIRE complete file paths): pdf, docx, rst, latex, epub\n\n"
+                "- Advanced formats (REQUIRE complete file paths): pdf, docx, pptx, rst, latex, epub\n\n"
                 "✅ CORRECT Usage Examples:\n"
                 "1. 'Convert this text to HTML' (basic conversion)\n"
                 "   - Tool will show converted content\n\n"
@@ -83,11 +83,11 @@ async def handle_list_tools() -> list[types.Tool]:
                         "type": "string",
                         "description": "Desired output format (defaults to markdown)",
                         "default": "markdown",
-                        "enum": ["markdown", "html", "pdf", "docx", "rst", "latex", "epub", "txt"]
+                        "enum": ["markdown", "html", "pdf", "docx", "pptx", "rst", "latex", "epub", "txt"]
                     },
                     "output_file": {
                         "type": "string",
-                        "description": "Complete path where to save the output including filename and extension (required for pdf, docx, rst, latex, epub formats)"
+                        "description": "Complete path where to save the output including filename and extension (required for pdf, docx, pptx, rst, latex, epub formats)"
                     }
                 },
                 "oneOf": [
@@ -99,7 +99,7 @@ async def handle_list_tools() -> list[types.Tool]:
                         "if": {
                             "properties": {
                                 "output_format": {
-                                    "enum": ["pdf", "docx", "rst", "latex", "epub"]
+                                    "enum": ["pdf", "docx", "pptx", "rst", "latex", "epub"]
                                 }
                             }
                         },
@@ -145,7 +145,7 @@ async def handle_call_tool(
         raise ValueError(f"Unsupported output format: '{output_format}'. Supported formats are: {', '.join(SUPPORTED_FORMATS)}")
     
     # Validate output_file requirement for advanced formats
-    ADVANCED_FORMATS = {'pdf', 'docx', 'rst', 'latex', 'epub'}
+    ADVANCED_FORMATS = {'pdf', 'docx', 'pptx', 'rst', 'latex', 'epub'}
     if output_format in ADVANCED_FORMATS and not output_file:
         raise ValueError(f"output_file path is required for {output_format} format")
     
