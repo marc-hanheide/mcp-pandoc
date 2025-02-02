@@ -5,6 +5,7 @@ from mcp.server import NotificationOptions, Server
 from pydantic import AnyUrl
 import mcp.server.stdio
 import os
+from sys import stderr
 
 server = Server("mcp-pandoc")
 
@@ -123,7 +124,7 @@ async def handle_call_tool(
     if name not in ["convert-contents"]:
         raise ValueError(f"Unknown tool: {name}")
     
-    print(arguments)
+    print(arguments, file=stderr)
 
     if not arguments:
         raise ValueError("Missing arguments")
@@ -140,7 +141,7 @@ async def handle_call_tool(
         raise ValueError("Either 'contents' or 'input_file' must be provided")
     
     # Define supported formats
-    SUPPORTED_FORMATS = {'html', 'markdown', 'pdf', 'docx', 'rst', 'latex', 'epub', 'txt'}
+    SUPPORTED_FORMATS = {'html', 'markdown', 'pdf', 'docx', 'pptx', 'rst', 'latex', 'epub', 'txt'}
     if output_format not in SUPPORTED_FORMATS:
         raise ValueError(f"Unsupported output format: '{output_format}'. Supported formats are: {', '.join(SUPPORTED_FORMATS)}")
     
